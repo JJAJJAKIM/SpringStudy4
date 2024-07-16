@@ -1,5 +1,6 @@
 package com.web.study01;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.web.components.FileComponent;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequestMapping("/s1")
 public class Study01Controller {
@@ -41,6 +45,27 @@ public class Study01Controller {
 	public String file(@RequestParam("file") MultipartFile file){
 		Map<String, Object> map = fc.setFile(file);
 		System.out.println(map);
+		return null;
+	}
+	@PostMapping("/test1")
+	public String test1(@RequestParam("file") MultipartFile file){
+		String filename = file.getOriginalFilename();
+		long filesize = file.getSize();
+		String contenttype = file.getContentType();
+		log.info("filename : {}", filename);
+		log.info("filesize : {}", filesize);
+		log.info("contenttype : {}", contenttype);
+
+		//파일 저장 경로가 필요하기 때문에 생성해야한다.
+		String path = "/Users/chaseongmin/Downloads/upload/2024-07-16/";
+		try {
+			File f = new File(path+filename);
+			f.mkdirs(); // 파일 저장할 경로 생성
+			file.transferTo(f); // 파일 복사내용 생성
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 	

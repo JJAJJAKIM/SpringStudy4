@@ -50,8 +50,8 @@ public class FileComponent {
 	    return resultMap;
 	  }
 
-	  public String upload(MultipartFile multipartFile) {
-	    String path = getRootPath() + middlePath + lastPath + getCurrnetDatePath();
+	public String upload(MultipartFile multipartFile) {
+		  String path = getRootPath() + middlePath + lastPath + getCurrnetDatePath();
 	    String fileName = getName(multipartFile);
 	    File file = new File(path + "/" + fileName);
 	    if(!file.exists()){
